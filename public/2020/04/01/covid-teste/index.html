@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.68.3" />
+
+
+<title>Covid teste - Covid-19 no DF</title>
+<meta property="og:title" content="Covid teste - Covid-19 no DF">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">1 min read</span>
+    
+
+    <h1 class="article-title">Covid teste</h1>
+
+    
+    <span class="article-date">2020-04-01</span>
+    
+
+    <div class="article-content">
+      
+
+
+<p>library(tidyverse)
+library(osmdata)
+library(viridis)
+library(htmlwidgets)
+library(plotly)
+library(ggplot2)</p>
+<p>#limites coordenadas DF
+getbb(“Distrito Federal Brazil”)</p>
+<p>#ruas
+streets &lt;- getbb(“Distrito Federal Brazil”)%&gt;%
+opq()%&gt;%
+add_osm_feature(key = “highway”,
+value = c(“motorway”, “primary”,
+“secondary”, “tertiary”)) %&gt;%
+osmdata_sf()</p>
+<p>#ruas pequenas
+small_streets &lt;- getbb(“Distrito Federal Brazil”)%&gt;%
+opq()%&gt;%
+add_osm_feature(key = “highway”,
+value = c(“residential”, “living_street”,
+“unclassified”,
+“service”, “footway”)) %&gt;%
+osmdata_sf()</p>
+<p>#preparar os dados
+data2 &lt;- data2 %&gt;%
+arrange(n) %&gt;%
+mutate( name=factor(name, unique(name))) %&gt;%
+mutate( mytext=paste(
+“RA:”, name, “”,
+“Casos:”, n, sep="")
+)</p>
+<p>#ggplot
+p &lt;- ggplot() +
+geom_sf(data = streets<span class="math inline">\(osm_lines,  inherit.aes = FALSE,  color = &quot;#7fc0ff&quot;,  size = .4,  alpha = .8) +  geom_sf(data = small_streets\)</span>osm_lines,
+inherit.aes = FALSE,
+color = “#ffbe7f”,
+size = .2,
+alpha = .6) +
+coord_sf(xlim = c(-48.28579, -47.30839),
+ylim = c(-16.05056, -15.50018),
+expand = FALSE) +
+theme_void() +
+theme(
+plot.background = element_rect(fill = “#282828”)
+) +
+geom_point(data=data2, aes(x=long, y=lat, size=n, color=n, text=mytext, alpha=n) ) +
+scale_size_continuous(range=c(1,15)) +
+scale_color_viridis(option=“inferno”, trans=“log” ) +
+scale_alpha_continuous(trans=“log”)</p>
+<p>#ggplotly
+p &lt;- ggplotly(p, tooltip=“text”)
+p</p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
