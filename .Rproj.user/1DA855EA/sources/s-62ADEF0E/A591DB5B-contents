@@ -1,0 +1,73 @@
+---
+title: Covid teste
+author: Igor Cobelo
+date: '2020-04-01'
+slug: covid-teste
+categories: []
+tags: []
+---
+library(tidyverse)
+library(osmdata)
+library(viridis)
+library(htmlwidgets)
+library(plotly)
+library(ggplot2)
+
+
+#limites coordenadas DF
+getbb("Distrito Federal Brazil")
+
+#ruas
+streets <- getbb("Distrito Federal Brazil")%>%
+  opq()%>%
+  add_osm_feature(key = "highway", 
+                  value = c("motorway", "primary", 
+                            "secondary", "tertiary")) %>%
+  osmdata_sf()
+
+#ruas pequenas
+small_streets <- getbb("Distrito Federal Brazil")%>%
+  opq()%>%
+  add_osm_feature(key = "highway", 
+                  value = c("residential", "living_street",
+                            "unclassified",
+                            "service", "footway")) %>%
+  osmdata_sf()
+
+#preparar os dados
+data2 <- data2 %>%
+  arrange(n) %>%
+  mutate( name=factor(name, unique(name))) %>%
+  mutate( mytext=paste(
+    "RA: ", name, "\n", 
+    "Casos: ", n, sep="")
+  )
+
+#ggplot
+p <- ggplot() +
+  geom_sf(data = streets$osm_lines,
+          inherit.aes = FALSE,
+          color = "#7fc0ff",
+          size = .4,
+          alpha = .8) +
+  geom_sf(data = small_streets$osm_lines,
+          inherit.aes = FALSE,
+          color = "#ffbe7f",
+          size = .2,
+          alpha = .6) +
+  coord_sf(xlim = c(-48.28579, -47.30839), 
+           ylim = c(-16.05056, -15.50018),
+           expand = FALSE) +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = "#282828")
+  ) +
+  geom_point(data=data2, aes(x=long, y=lat, size=n, color=n, text=mytext, alpha=n) ) +
+  scale_size_continuous(range=c(1,15)) +
+  scale_color_viridis(option="inferno", trans="log" ) +
+  scale_alpha_continuous(trans="log")
+
+#ggplotly
+p <- ggplotly(p, tooltip="text")
+p
+

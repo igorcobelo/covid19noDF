@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1585762905342.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "123557210",
+    "id" : "A591DB5B",
+    "lastKnownWriteTime" : 1585763006,
+    "last_content_update" : 1585763006763,
+    "path" : "~/covid19nodf/content/post/2020-04-01-covid-teste.Rmd",
+    "project_path" : "content/post/2020-04-01-covid-teste.Rmd",
+    "properties" : {
+        "cursorPosition" : "72,0",
+        "scrollLine" : "55"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
