@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "123557210",
+    "hash" : "0",
     "id" : "A591DB5B",
-    "lastKnownWriteTime" : 1585763006,
-    "last_content_update" : 1585763006763,
+    "lastKnownWriteTime" : 1585764818,
+    "last_content_update" : 1585764818231,
     "path" : "~/covid19nodf/content/post/2020-04-01-covid-teste.Rmd",
     "project_path" : "content/post/2020-04-01-covid-teste.Rmd",
     "properties" : {
-        "cursorPosition" : "72,0",
-        "scrollLine" : "55"
+        "cursorPosition" : "15,0",
+        "scrollLine" : "0"
     },
     "read_only" : false,
     "read_only_alternatives" : [

@@ -1,11 +1,12 @@
 ---
-title: Covid teste
-author: Igor Cobelo
+title: "Covid teste"
+author: "Igor Cobelo"
 date: '2020-04-01'
 slug: covid-teste
-categories: []
 tags: []
+categories: []
 ---
+
 library(tidyverse)
 library(osmdata)
 library(viridis)
@@ -13,11 +14,8 @@ library(htmlwidgets)
 library(plotly)
 library(ggplot2)
 
+data2<-read.table("C:/Users/Igor/Documents/covid19nodf/static/address.csv", sep=";", header=T)
 
-#limites coordenadas DF
-getbb("Distrito Federal Brazil")
-
-#ruas
 streets <- getbb("Distrito Federal Brazil")%>%
   opq()%>%
   add_osm_feature(key = "highway", 
@@ -25,7 +23,6 @@ streets <- getbb("Distrito Federal Brazil")%>%
                             "secondary", "tertiary")) %>%
   osmdata_sf()
 
-#ruas pequenas
 small_streets <- getbb("Distrito Federal Brazil")%>%
   opq()%>%
   add_osm_feature(key = "highway", 
@@ -34,7 +31,6 @@ small_streets <- getbb("Distrito Federal Brazil")%>%
                             "service", "footway")) %>%
   osmdata_sf()
 
-#preparar os dados
 data2 <- data2 %>%
   arrange(n) %>%
   mutate( name=factor(name, unique(name))) %>%
@@ -43,7 +39,6 @@ data2 <- data2 %>%
     "Casos: ", n, sep="")
   )
 
-#ggplot
 p <- ggplot() +
   geom_sf(data = streets$osm_lines,
           inherit.aes = FALSE,
@@ -67,7 +62,5 @@ p <- ggplot() +
   scale_color_viridis(option="inferno", trans="log" ) +
   scale_alpha_continuous(trans="log")
 
-#ggplotly
-p <- ggplotly(p, tooltip="text")
-p
+ggplotly(p, tooltip="text")
 
